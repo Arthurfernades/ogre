@@ -62,6 +62,14 @@ namespace Ogre
         mDriverVersion.QuadPart = 0;
     }
     //---------------------------------------------------------------------
+    void D3D11Device::Flush()
+    {
+        if (mImmediateContext)
+        {
+            mImmediateContext->Flush();
+        }
+    }
+    //---------------------------------------------------------------------
     void D3D11Device::TransferOwnership(ID3D11DeviceN* d3d11device)
     {
         assert(mD3D11Device.Get() != d3d11device);

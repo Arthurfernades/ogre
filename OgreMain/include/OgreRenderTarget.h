@@ -237,6 +237,8 @@ namespace Ogre {
         */
         virtual void getCustomAttribute(const String& name, void* pData);
 
+        virtual void doFlush();
+
         /** simplified API for bindings
          * 
          * @overload

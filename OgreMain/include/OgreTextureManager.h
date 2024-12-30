@@ -262,6 +262,12 @@ namespace Ogre {
             TextureType texType, uint width, uint height, uint depth, 
             int numMipmaps, PixelFormat format, int usage = TU_DEFAULT, ManualResourceLoader* loader = 0,
             bool hwGammaCorrection = false, uint fsaa = 0, const String& fsaaHint = BLANKSTRING);
+        
+        TexturePtr createManualWithSurface(const String& name, const String& group, TextureType texType, uint width,
+                                           uint height, uint depth, int numMipmaps, PixelFormat format,
+                                           int usage = TU_DEFAULT, void* surface = nullptr,
+                                           ManualResourceLoader* loader = 0, bool hwGammaCorrection = false,
+                                           uint fsaa = 0, const String& fsaaHint = BLANKSTRING);
             
         /** @overload
         */
@@ -272,6 +278,16 @@ namespace Ogre {
         {
             return createManual(name, group, texType, width, height, 1, 
                 numMipmaps, format, usage, loader, hwGammaCorrection, fsaa, fsaaHint);
+        }
+
+        TexturePtr createManualWithSurface(const String& name, const String& group, TextureType texType, uint width,
+                                           uint height, int numMipmaps, PixelFormat format, int usage = TU_DEFAULT,
+                                           void* surface = nullptr, ManualResourceLoader* loader = 0,
+                                           bool hwGammaCorrection = false, uint fsaa = 0,
+                                           const String& fsaaHint = BLANKSTRING)
+        {
+            return createManualWithSurface(name, group, texType, width, height, 1, numMipmaps, format, usage, surface,
+                                           loader, hwGammaCorrection, fsaa, fsaaHint);
         }
 
         /** Sets preferred bit depth for integer pixel format textures.

@@ -158,6 +158,9 @@ namespace Ogre
         case TEX_TYPE_2D_ARRAY:
             this->_create2DTex();
             break;
+        case TEX_TYPE_2D_WITH_SURFACE:
+            this->_create2DTexWithSurface();
+            break;
         case TEX_TYPE_3D:
             this->_create3DTex();
             break;
@@ -304,6 +307,74 @@ namespace Ogre
         _create2DResourceView();
     }
     //----------------------------------------------------------------------------
+    /// <summary>
+    /// Initializes a Direct3D 11 2D texture surface by querying interfaces, retrieving a shared handle, and creating a
+    /// render target view.
+    /// </summary>
+    void D3D11Texture::_create2DTexWithSurface()
+    {
+        if (!mSurface)
+            throw std::runtime_error("Invalid resource provided.");
+
+        HRESULT hr = S_OK;
+
+        IUnknown* pUnk = (IUnknown*)mSurface;
+
+        IDXGIResource* pDXGIResource;
+        hr = pUnk->QueryInterface(__uuidof(IDXGIResource), (void**)&pDXGIResource);
+        if (FAILED(hr))
+        {
+            throw std::runtime_error("Failed to query IDXGIResource interface from the provided object.");
+        }
+
+        HANDLE sharedHandle;
+        hr = pDXGIResource->GetSharedHandle(&sharedHandle);
+        if (FAILED(hr))
+        {
+            throw std::runtime_error("Failed to retrieve the shared handle from IDXGIResource. Ensure the resource was "
+                                     "created with the D3D11_RESOURCE_MISC_SHARED flag.");
+        }
+
+        pDXGIResource->Release();
+
+        IUnknown* tempResource11;
+        hr = mDevice->OpenSharedResource(sharedHandle, __uuidof(ID3D11Resource), (void**)(&tempResource11));
+        if (FAILED(hr))
+        {
+            throw std::runtime_error("Failed to open shared resource using the shared handle. Ensure the handle is "
+                                     "valid and the device supports shared resources.");
+        }
+
+        ID3D11Texture2D* pOutputResource;
+        hr = tempResource11->QueryInterface(__uuidof(ID3D11Texture2D), (void**)(&pOutputResource));
+        if (FAILED(hr))
+        {
+            throw std::runtime_error("Failed to query ID3D11Texture2D interface from the shared resource. Ensure the "
+                                     "resource is of the correct type.");
+        }
+        tempResource11->Release();
+
+        mp2DTex = pOutputResource;
+
+        D3D11_TEXTURE2D_DESC desc;
+        mp2DTex->GetDesc(&desc);
+
+        D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
+        rtDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+        rtDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+        rtDesc.Texture2D.MipSlice = 0;
+
+        ComPtr<ID3D11RenderTargetView> renderTargetView;
+        hr = mDevice->CreateRenderTargetView(mp2DTex.Get(), nullptr, renderTargetView.GetAddressOf());
+        if (FAILED(hr))
+            throw std::runtime_error("Failed to create ID3D11RenderTargetView. Verify that the texture is valid, "
+                                     "properly initialized, and compatible with RenderTargetView creation.");
+
+        _queryInterface<ID3D11Texture2D, ID3D11Resource>(mp2DTex, &mpTex);
+
+        _create2DResourceView();
+    }
+    //----------------------------------------------------------------------------
     void D3D11Texture::_create2DResourceView()
     {
         // set final tex. attributes from tex. description
@@ -342,6 +413,7 @@ namespace Ogre
             break;
 
         case TEX_TYPE_2D:
+        case TEX_TYPE_2D_WITH_SURFACE:
         case TEX_TYPE_1D:  // For Feature levels that do not support 1D textures, revert to creating a 2D texture.
             if (mFSAAType.Count > 1)
             {
@@ -625,4 +697,6 @@ namespace Ogre
     {
         rebind(static_cast<D3D11HardwarePixelBuffer*>(mBuffer));
     }
+    //---------------------------------------------------------------------
+    void D3D11RenderTexture::doFlush() { mDevice.Flush(); }
 }

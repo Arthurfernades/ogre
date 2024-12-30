@@ -94,6 +94,8 @@ namespace Ogre {
         void _create1DTex();
         /// internal method, create a blank normal 2D texture
         void _create2DTex();
+        /// internal method, use a normal 2D texture
+        void _create2DTexWithSurface();
         /// internal method, create a blank cube texture
         void _create3DTex();
 
@@ -152,6 +154,7 @@ namespace Ogre {
     protected:
         void notifyDeviceLost(D3D11Device* device);
         void notifyDeviceRestored(D3D11Device* device);
+        void doFlush();
     };
 
 }

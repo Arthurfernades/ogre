@@ -405,7 +405,11 @@ namespace Ogre {
     void Texture::getCustomAttribute(const String&, void*)
     {
     }
-
+    //--------------------------------------------------------------------------
+    void Texture::doFlush()
+    {
+    }
+    //--------------------------------------------------------------------------        
     void Texture::readImage(LoadedImages& imgs, const String& name, const String& ext, bool haveNPOT)
     {
         DataStreamPtr dstream = ResourceGroupManager::getSingleton().openResource(name, mGroup, this);

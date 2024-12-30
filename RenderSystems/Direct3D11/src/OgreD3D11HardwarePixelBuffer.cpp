@@ -49,12 +49,13 @@ namespace Ogre {
 		{
 			switch(textureType)
 			{
-			case TEX_TYPE_1D:       return "1D texture";
-			case TEX_TYPE_CUBE_MAP: return "cube map texture";
-			case TEX_TYPE_2D:       return "2D texture";
-			case TEX_TYPE_2D_ARRAY: return "2D texture array";
-			case TEX_TYPE_3D:       return "3D texture";
-			default:                return "texture";
+			case TEX_TYPE_1D:                       return "1D texture";
+			case TEX_TYPE_CUBE_MAP:                 return "cube map texture";
+			case TEX_TYPE_2D:                       return "2D texture";
+			case TEX_TYPE_2D_WITH_SURFACE:          return "2D texture with surface";
+			case TEX_TYPE_2D_ARRAY:                 return "2D texture array";
+			case TEX_TYPE_3D:                       return "3D texture";
+			default:                                return "texture";
 			}
 		}
 	}
@@ -481,6 +482,7 @@ namespace Ogre {
             }                   
             break;
         case TEX_TYPE_2D:
+        case TEX_TYPE_2D_WITH_SURFACE:
         case TEX_TYPE_CUBE_MAP:
         case TEX_TYPE_2D_ARRAY:
             {

@@ -108,7 +108,9 @@ namespace Ogre {
         /// 2D texture array
         TEX_TYPE_2D_ARRAY = 5,
         /// GLES2 only OES texture type
-        TEX_TYPE_EXTERNAL_OES = 6
+        TEX_TYPE_EXTERNAL_OES = 6,
+        /// 2D texture, used when you already have a surface
+        TEX_TYPE_2D_WITH_SURFACE = 7
     };
 
     /** Enum identifying special mipmap numbers
@@ -145,6 +147,14 @@ namespace Ogre {
         /** Gets the type of texture 
         */
         TextureType getTextureType(void) const { return mTextureType; }
+
+        /** Sets the surface when you already have one
+         */
+        void setSurface(void* surface) { mSurface = surface; }
+
+        /** Gets the surface
+         */
+        void* getSurface(void) const { return mSurface; }
 
         /** Gets the number of mipmaps to be used for this texture.
         */
@@ -414,6 +424,8 @@ namespace Ogre {
             @param pData Pointer to memory matching the type of data you want to retrieve.
         */
         virtual void getCustomAttribute(const String& name, void* pData);
+
+        virtual void doFlush();
         
         /** simplified API for bindings
          * 
@@ -472,6 +484,8 @@ namespace Ogre {
         SurfaceList mSurfaceList;
 
         TextureType mTextureType;
+
+        void* mSurface;
 
         void prepareImpl() override;
         void unprepareImpl() override;
