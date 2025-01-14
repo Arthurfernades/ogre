@@ -216,41 +216,6 @@ namespace Ogre {
         return ret;
     }
     //-----------------------------------------------------------------------
-    TexturePtr TextureManager::createManualWithSurface(const String& name, const String& group, TextureType texType,
-                                                       uint width, uint height, uint depth, int numMipmaps,
-                                                       PixelFormat format, int usage, void* surface,
-                                                       ManualResourceLoader* loader, bool hwGamma, uint fsaa,
-                                                       const String& fsaaHint)
-    {
-        TexturePtr ret;
-
-        OgreAssert(width && height && depth, "total size of texture must not be zero");
-
-        // Check for texture support
-        const auto caps = Root::getSingleton().getRenderSystem()->getCapabilities();
-        if (((texType == TEX_TYPE_3D) && !caps->hasCapability(RSC_TEXTURE_3D)) ||
-            ((texType == TEX_TYPE_2D_ARRAY) && !caps->hasCapability(RSC_TEXTURE_2D_ARRAY)))
-            return ret;
-
-        ret = create(name, group, true, loader);
-
-        if (!ret)
-            return ret;
-
-        ret->setSurface(surface);
-        ret->setTextureType(texType);
-        ret->setWidth(width);
-        ret->setHeight(height);
-        ret->setDepth(depth);
-        ret->setNumMipmaps((numMipmaps == MIP_DEFAULT) ? mDefaultNumMipmaps : static_cast<uint32>(numMipmaps));
-        ret->setFormat(format);
-        ret->setUsage(usage);
-        ret->setHardwareGammaEnabled(hwGamma);
-        ret->setFSAA(fsaa, fsaaHint);
-        ret->createInternalResources();
-        return ret;
-    }
-    //-----------------------------------------------------------------------
     void TextureManager::setPreferredIntegerBitDepth(ushort bits, bool reloadTextures)
     {
         mPreferredIntegerBitDepth = bits;

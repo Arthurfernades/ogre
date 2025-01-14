@@ -93,9 +93,7 @@ namespace Ogre {
         /// internal method, create a blank normal 1D Dtexture
         void _create1DTex();
         /// internal method, create a blank normal 2D texture
-        void _create2DTex();
-        /// internal method, use a normal 2D texture
-        void _create2DTexWithSurface();
+        void _create2DTex();       
         /// internal method, create a blank cube texture
         void _create3DTex();
 

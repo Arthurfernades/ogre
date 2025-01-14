@@ -109,8 +109,6 @@ namespace Ogre {
         TEX_TYPE_2D_ARRAY = 5,
         /// GLES2 only OES texture type
         TEX_TYPE_EXTERNAL_OES = 6,
-        /// 2D texture, used when you already have a surface
-        TEX_TYPE_2D_WITH_SURFACE = 7
     };
 
     /** Enum identifying special mipmap numbers
@@ -150,7 +148,7 @@ namespace Ogre {
 
         /** Sets the surface when you already have one
          */
-        void setSurface(void* surface) { mSurface = surface; }
+        virtual void _setSurface(void* surface) { mSurface = surface; }
 
         /** Gets the surface
          */
