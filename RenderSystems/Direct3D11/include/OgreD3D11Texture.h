@@ -108,6 +108,8 @@ namespace Ogre {
         /// mipmap level. This method must be called after the D3D texture object was created
         void _createSurfaceList(void);
 
+        void _setSurface(void* surface) override;
+
         void notifyDeviceLost(D3D11Device* device);
         void notifyDeviceRestored(D3D11Device* device);
 
@@ -128,6 +130,8 @@ namespace Ogre {
 
         D3D11_SHADER_RESOURCE_VIEW_DESC mSRVDesc;
         bool mAutoMipMapGeneration;
+
+        void* mSurface;
     };
 
     /// RenderTexture implementation for D3D11

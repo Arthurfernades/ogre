@@ -548,6 +548,8 @@ void D3D11Texture::_createSurfaceList(void)
     }
 }
 //---------------------------------------------------------------------
+void D3D11Texture :: _setSurface(void* surface) { mSurface = surface; }
+//---------------------------------------------------------------------
 // D3D11RenderTexture
 //---------------------------------------------------------------------
 void D3D11RenderTexture::rebind(D3D11HardwarePixelBuffer* buffer)

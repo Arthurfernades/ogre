@@ -148,11 +148,7 @@ namespace Ogre {
 
         /** Sets the surface when you already have one
          */
-        virtual void _setSurface(void* surface) { mSurface = surface; }
-
-        /** Gets the surface
-         */
-        void* getSurface(void) const { return mSurface; }
+        virtual void _setSurface(void* surface) {}
 
         /** Gets the number of mipmaps to be used for this texture.
         */
@@ -481,9 +477,7 @@ namespace Ogre {
         typedef std::vector<HardwarePixelBufferSharedPtr> SurfaceList;
         SurfaceList mSurfaceList;
 
-        TextureType mTextureType;
-
-        void* mSurface;
+        TextureType mTextureType;        
 
         void prepareImpl() override;
         void unprepareImpl() override;
