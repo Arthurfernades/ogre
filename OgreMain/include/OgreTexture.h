@@ -477,7 +477,7 @@ namespace Ogre {
         typedef std::vector<HardwarePixelBufferSharedPtr> SurfaceList;
         SurfaceList mSurfaceList;
 
-        TextureType mTextureType;        
+        TextureType mTextureType;
 
         void prepareImpl() override;
         void unprepareImpl() override;

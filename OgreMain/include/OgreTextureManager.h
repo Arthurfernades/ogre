@@ -262,7 +262,6 @@ namespace Ogre {
             TextureType texType, uint width, uint height, uint depth, 
             int numMipmaps, PixelFormat format, int usage = TU_DEFAULT, ManualResourceLoader* loader = 0,
             bool hwGammaCorrection = false, uint fsaa = 0, const String& fsaaHint = BLANKSTRING);
-                
         /** @overload
         */
         TexturePtr createManual(const String & name, const String& group,
@@ -272,7 +271,7 @@ namespace Ogre {
         {
             return createManual(name, group, texType, width, height, 1, 
                 numMipmaps, format, usage, loader, hwGammaCorrection, fsaa, fsaaHint);
-        }        
+        }
         /** Sets preferred bit depth for integer pixel format textures.
         @param
             bits Number of bits. Available values: 0, 16 and 32, where 0 (the default) means keep
