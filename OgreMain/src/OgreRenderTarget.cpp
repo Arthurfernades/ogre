@@ -320,8 +320,6 @@ namespace Ogre {
         OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Attribute not found. " + name, " RenderTarget::getCustomAttribute");
     }
     //-----------------------------------------------------------------------
-    void RenderTarget::doFlush() { OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Flush Error"); }
-    //-----------------------------------------------------------------------
     void RenderTarget::addListener(RenderTargetListener* listener)
     {
         if (std::find(mListeners.begin(), mListeners.end(), listener) == mListeners.end())

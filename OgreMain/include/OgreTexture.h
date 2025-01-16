@@ -418,8 +418,6 @@ namespace Ogre {
             @param pData Pointer to memory matching the type of data you want to retrieve.
         */
         virtual void getCustomAttribute(const String& name, void* pData);
-
-        virtual void doFlush();
         
         /** simplified API for bindings
          * 
